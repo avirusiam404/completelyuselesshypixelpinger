@@ -4,6 +4,8 @@ from dotenv import dotenv_values as envval
 from discord_webhook import DiscordWebhook, DiscordEmbed
 from time import sleep as slp
 from javascript import require, On, Once
+import nbtlib
+from nbtlib import String, Compound, Byte
 import queue
 mineflayer = require('mineflayer')
 import re
