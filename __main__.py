@@ -5,13 +5,14 @@ from discord_webhook import DiscordWebhook, DiscordEmbed
 from time import sleep as slp
 from javascript import require, On, Once
 import nbtlib
-from nbtlib import String, Compound, Byte
+from nbtlib import String, Compound, Byte, List
 import queue
 mineflayer = require('mineflayer')
 import re
 
 WIP = envval('.env')['dlip']
 WEBHOOK = envval('.env')['webhook']
+
 
 ip = input('ip: ') or WIP
 start_port = int(input('startport: '))
@@ -42,6 +43,7 @@ def makebot(ip, port, username, q):
     @On(bot, 'kicked')
     def handler_kicked(_1, reason, _2):
         q.put({"name":"Kicked","value":f'<@&1413150345684848713> {reason}'})
+
 
 def run_bot(ip,port,username):
     q = queue.Queue()
@@ -78,6 +80,9 @@ def dowebhook(port, desc, players, protocol, name):
             embed.add_embed_field(name="Version", value=f"{name}")
 
             embed.add_embed_field(name=result.get('name'), value=result.get('value'))
+
+            if True: 
+                nbtlib.File({"servers": (nbtlib.load(SERVERSDATPATH).root["servers"] if nbtlib.Path(SERVERSDATPATH).exists() else nbtlib.List[Compound]()) + [Compound({"ip": String(ip+':'+port), "name": String(ip+':'+port), "acceptTextures": Byte(0)})]},root="servers").save(SERVERSDATPATH)
         except queue.Empty:
             return
         
