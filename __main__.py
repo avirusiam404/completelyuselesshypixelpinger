@@ -80,9 +80,6 @@ def dowebhook(port, desc, players, protocol, name):
             embed.add_embed_field(name="Version", value=f"{name}")
 
             embed.add_embed_field(name=result.get('name'), value=result.get('value'))
-
-            if True: 
-                nbtlib.File({"servers": (nbtlib.load(SERVERSDATPATH).root["servers"] if nbtlib.Path(SERVERSDATPATH).exists() else nbtlib.List[Compound]()) + [Compound({"ip": String(ip+':'+port), "name": String(ip+':'+port), "acceptTextures": Byte(0)})]},root="servers").save(SERVERSDATPATH)
         except queue.Empty:
             return
         
