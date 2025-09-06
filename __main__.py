@@ -18,6 +18,28 @@ ip = input('ip: ') or WIP
 start_port = int(input('startport: '))
 end_port = int(input('endport: '))
 
+def run_script(bot):
+    with open('commands.Ax2Bs', 'r') as f:
+        lines=[line.strip() for line in f if line.strip()]
+
+    for line in lines:
+        if line.startswith('x'):
+            parts = line.split(maxsplit=2)
+            if len(parts) >= 3 and parts[1] == 'chat':
+                count = int(parts[0][1:])
+                msg = parts[2]
+                for _ in range(count):
+                    bot.chat(msg)
+        # handle normal chat: chat msg
+        elif line.startswith('chat '):
+            msg = line[5:]
+            bot.chat(msg)
+        # handle sleep: slp N
+        elif line.startswith('slp '):
+            seconds = float(line[4:])
+            slp(seconds)
+        else:
+            print(f"Unknown command: {line}")
 
 def makebot(ip, port, username, q):
     bot = mineflayer.createBot({
@@ -37,6 +59,7 @@ def makebot(ip, port, username, q):
             bot.quit()
         elif _2 in ('Incorrect argument for command', 'Set own game mode to Creative Mode'):
             q.put({"name":"Cheats","value":f'<@&1413150208727973998>'})
+            run_script(bot)
             bot.quit()
 
 
@@ -78,10 +101,31 @@ def dowebhook(port, desc, players, protocol, name):
             embed.add_embed_field(name="PlayerCount", value=f"{players}/8")
             embed.add_embed_field(name="MOTD", value=f"{desc}")
             embed.add_embed_field(name="Version", value=f"{name}")
+            embed.set_thumbnail(url=f"https://ping.cornbread2100.com/favicon?ip={ip}&port={port}&errors=false")
 
             embed.add_embed_field(name=result.get('name'), value=result.get('value'))
         except queue.Empty:
             return
+    else:
+        webhook = DiscordWebhook(
+            url=WEBHOOK,
+            username='archx2 scanner :D',
+            content='<@&1412851881939701780>\n<@&1413392210271014953>'
+        )
+        embed = DiscordEmbed(
+            title=f'{ip}:{port}',
+            description="Found a LAN Server",
+            color="03b2f8"
+        )
+        embed.set_timestamp()
+        embed.add_embed_field(name="PlayerCount", value=f"{players}/8")
+        embed.add_embed_field(name="MOTD", value=f"{desc}")
+        embed.add_embed_field(name="Version", value=f"{name}")
+        embed.set_thumbnail(url=f"https://ping.cornbread2100.com/favicon?ip={ip}&port={port}&errors=false")
+
+        embed.add_embed_field(name="Error",value="<@&1413392210271014953>")
+
+
         
     webhook.add_embed(embed)
     webhook.execute()

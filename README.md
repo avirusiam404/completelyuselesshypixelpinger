@@ -1,4 +1,4 @@
-блять это сканнер для пингования и поиска локалок хорошо работает на `playit.gg`, made for using with discord webhook
+Блять это сканнер для пингования и поиска локалок хорошо работает на `playit.gg`, made for using with discord webhook
 
 > [!NOTE]
 > IM DUMB AND I HARDCODED SOME THINGS LIKE DISCORD ROLES PLS CHANGE IT IN THE `./__main__.py`
