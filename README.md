@@ -8,7 +8,7 @@
 > `1413150208727973998` - Pinging when bot can join and there is cheats enabled</br>
 > `1413150268266254336` - Pinging when bot can join and there is cheats disabled</br>
 > `1413150345684848713` - Pinging when bot cant join because of kick</br>
-
+> `1413392210271014953` - Pinging when bot cant join because of protocol is too high (>767)</br>
 
 > [!NOTE]
 > SET THIS TEMPLATE AND CHANGE IT
